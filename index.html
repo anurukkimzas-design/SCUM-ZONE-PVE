@@ -3,93 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SCUM ZONE PVE</title>
+    <title>SCUM ZONE PVE - SERVER</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Noto+Sans+Thai:wght@300;500;700&display=swap');
+        
         body {
-            background-color: #1a1a1a;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-image: url('https://images.unsplash.com/photo-1579374020961-04a434070a31?q=80&w=1920'); /* รูปพื้นหลังบรรยากาศเกม */
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: radial-gradient(circle at center, #0a1c12 0%, #050b07 100%);
+            color: #e2e8f0;
+            font-family: 'Noto Sans Thai', 'Orbitron', sans-serif;
+            overflow-x: hidden;
         }
-        .scum-header {
-            background: linear-gradient(180deg, rgba(255,165,0,1) 0%, rgba(212,138,0,1) 100%);
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+
+        /* เอฟเฟกต์เรืองแสงนีออนเขียว */
+        .neon-text-green {
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.6), 0 0 20px rgba(0, 255, 102, 0.4);
         }
-        .scum-title {
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+        .neon-border-green {
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+            border-color: #00ff66;
         }
-        .welcome-card {
-            background-color: rgba(30, 30, 30, 0.9);
-            border: 2px solid #D48A00;
-            border-radius: 10px;
-            padding: 40px;
-            max-width: 600px;
-            margin: 100px auto;
-            text-align: center;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
-            position: relative;
+        
+        /* แอนิเมชันสุ่มของ */
+        @keyframes gacha-spin {
+            0% { transform: scale(1) rotate(0deg); filter: blur(0px); }
+            50% { transform: scale(1.1) rotate(5deg); filter: blur(3px); }
+            100% { transform: scale(1) rotate(0deg); filter: blur(0px); }
         }
-        .welcome-title {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #D48A00;
-            margin-bottom: 20px;
-        }
-        .welcome-text {
-            font-size: 1.2rem;
-            color: #ccc;
-            margin-bottom: 30px;
-        }
-        .scum-button {
-            background: linear-gradient(180deg, rgba(255,165,0,1) 0%, rgba(212,138,0,1) 100%);
-            color: #fff;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background 0.3s ease, transform 0.2s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
-        }
-        .scum-button:hover {
-            background: linear-gradient(180deg, rgba(212,138,0,1) 0%, rgba(180,117,0,1) 100%);
-            transform: translateY(-2px);
-        }
-        .scum-button:active {
-            transform: translateY(1px);
+        .spinning {
+            animation: gacha-spin 0.5s ease-in-out infinite;
         }
     </style>
 </head>
-<body>
-    <header class="scum-header">
-        <div class="scum-title">
-            <span>🏕️</span>
-            <span>SCUM ZONE PVE</span>
+<body class="min-h-screen flex flex-col justify-between">
+
+    <nav class="bg-black/80 border-b border-zinc-800/80 px-6 py-4 sticky top-0 z-50 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="text-xl font-black tracking-widest text-white font-['Orbitron']">
+                SCUM <span class="text-[#00ff66] neon-text-green">ZONE PVE</span>
+            </div>
+            
+            <div class="hidden lg:flex space-x-8 text-xs uppercase tracking-wider font-semibold text-gray-400">
+                <a href="#" class="text-[#00ff66] border-b-2 border-[#00ff66] pb-1 font-bold">HOME</a>
+                <a href="#server-info" class="hover:text-white transition">SERVER INFO</a>
+                <a href="#rules" class="hover:text-white transition">RULES</a>
+                <a href="#gacha-section" class="hover:text-[#00ff66] text-amber-400 transition flex items-center gap-1">
+                    <i class="fa-solid <i fa-dice-d20"></i> LUCKY DRAW (สุ่มของ)
+                </a>
+                <a href="#" class="hover:text-white transition">BOT SHOP</a>
+            </div>
+
+            <button class="border border-[#00ff66] text-[#00ff66] hover:bg-[#00ff66] hover:text-black font-bold px-5 py-1.5 rounded-full text-xs uppercase tracking-widest transition duration-300 shadow-[0_0_10px_rgba(0,255,102,0.2)]">
+                LOGIN WITH STEAM
+            </button>
+        </div>
+    </nav>
+
+    <header class="max-w-5xl mx-auto text-center px-4 pt-16 pb-12 flex-grow flex flex-col justify-center items-center">
+        <div class="border border-[#00ff66]/40 text-[#00ff66] text-[10px] font-bold tracking-widest px-4 py-1 rounded-full uppercase bg-[#00ff66]/5 mb-6">
+            PVE • LOOT X5 • CUSTOM LOOT • BOTSHOP • ACTIVE ADMIN
+        </div>
+
+        <h1 class="text-6xl md:text-8xl font-black text-white tracking-tight font-['Orbitron'] mb-2">
+            SCUM <span class="text-[#00ff66] neon-text-green">ZONE</span>
+        </h1>
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-400 tracking-widest uppercase mb-6">
+            PVE SERVER
+        </h2>
+
+        <div class="border border-zinc-800 bg-zinc-900/60 backdrop-blur px-5 py-1.5 rounded-full text-xs font-bold tracking-wider mb-10 flex items-center gap-2">
+            <span class="h-2 w-2 rounded-full bg-[#00ff66] shadow-[0_0_8px_#00ff66] animate-pulse"></span>
+            ONLINE: <span class="text-[#00ff66]">24 / 100</span>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-4 w-full justify-center max-w-md mb-20">
+            <button onclick="navigator.clipboard.writeText('123.456.789:7777'); alert('ก๊อปปี้ IP เซิร์ฟเวอร์แล้ว!')" class="bg-[#00ff66] hover:bg-[#00ee55] text-black font-bold px-8 py-3.5 rounded-xl text-sm tracking-wider uppercase transition flex items-center justify-center gap-2 shadow-[0_0_20px_rgba(0,255,102,0.3)]">
+                <i class="fa-solid fa-copy"></i> Copy Server IP
+            </button>
+            <a href="https://discord.gg/your-link" target="_blank" class="bg-zinc-900/80 hover:bg-zinc-800 border border-zinc-700 text-white font-bold px-8 py-3.5 rounded-xl text-sm tracking-wider uppercase transition flex items-center justify-center gap-2 backdrop-blur">
+                <i class="fa-brands fa-discord text-indigo-400"></i> Join Discord
+            </a>
         </div>
     </header>
 
-    <main>
-        <div class="welcome-card">
-            <h1 class="welcome-title">ยินดีต้อนรับ</h1>
-            <p class="welcome-text">เว็บไซต์เซิร์ฟเวอร์ SCUM ZONE PVE</p>
-            <button class="scum-button">ร้านแลกของ</button>
+    <section id="gacha-section" class="max-w-4xl mx-auto w-full px-4 pb-24">
+        <div class="bg-black/60 border border-zinc-800 rounded-3xl p-8 backdrop-blur-md relative overflow-hidden shadow-2xl">
+            <div class="absolute top-0 right-0 p-4 text-xs font-mono text-zinc-600">SCUM-SYSTEM-V1</div>
+            
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-white mb-2"><i class="fa-solid fa-gift text-amber-400"></i> ระบบกล่องสุ่มไอเทมเซิร์ฟเวอร์</h3>
+                <p class="text-xs text-gray-400">ใช้แต้มพ้อยท์ในเกมของคุณเพื่อลุ้นรับไอเทมสุดแรร์</p>
+            </div>
+
+            <div class="flex flex-col items-center justify-center py-6">
+                <div id="gacha-display" class="w-48 h-48 bg-zinc-900 border-2 border-dashed border-zinc-700 rounded-2xl flex flex-col items-center justify-center text-center p-4 transition-all duration-300">
+                    <i id="item-icon" class="fa-solid fa-box-open text-5xl text-zinc-500 mb-3"></i>
+                    <div id="item-name" class="text-sm font-bold text-gray-400">กดปุ่มด้านล่างเพื่อสุ่มของ</div>
+                    <div id="item-rarity" class="text-[10px] uppercase tracking-widest mt-1 text-zinc-600">READY</div>
+                </div>
+
+                <button onclick="spinGacha()" id="spin-btn" class="mt-8 bg-amber-500 hover:bg-amber-600 text-black font-black px-10 py-4 rounded-xl text-base uppercase tracking-wider transition-all shadow-[0_0_25px_rgba(245,158,11,0.2)]">
+                    <i class="fa-solid fa-dice"></i> เริ่มสุ่มไอเทม (FREE)
+                </button>
+            </div>
         </div>
-    </main>
+    </section>
+
+    <footer class="bg-black/90 text-center py-6 text-[10px] text-gray-600 border-t border-zinc-900 font-mono tracking-wider">
+        <p>© 2026 SCUM ZONE PVE. CODE POWERED BY GIT-AGENT. NOT AFFILIATED WITH GAMEPIRES.</p>
+    </footer>
+
+    <script>
+        const items = [
+            { name: "M82 Barett Rifle 50. Cal", icon: "fa-gun", rarity: "LEGENDARY", color: "#ff3366" },
+            { name: "Screwdriver (คีมแดงเหลือง x40)", icon: "fa-screwdriver", rarity: "RARE", color: "#3399ff" },
+            { name: "Fame Points +500", icon: "fa-star", rarity: "EPIC", color: "#aa33ff" },
+            { name: "ชุดเกราะทหารไฮเทคดาร์ก", icon: "fa-shield-halved", rarity: "EPIC", color: "#aa33ff" },
+            { name: "รถกระบะ Pickup Truck (กุญแจพร้อม)", icon: "fa-car", rarity: "LEGENDARY", color: "#ff3366" },
+            { name: "ชุดปฐมพยาบาล ADVANCED MEDKIT", icon: "fa-kit-medical", rarity: "COMMON", color: "#00ff66" }
+        ];
+
+        function spinGacha() {
+            const display = document.getElementById('gacha-display');
+            const icon = document.getElementById('item-icon');
+            const name = document.getElementById('item-name');
+            const rarity = document.getElementById('item-rarity');
+            const btn = document.getElementById('spin-btn');
+
+            // เริ่มเปิดเอฟเฟกต์หมุนสุ่ม
+            btn.disabled = true;
+            display.classList.add('spinning');
+            display.style.borderColor = "#f59e0b";
+            name.innerText = "กำลังสุ่มไอเทม...";
+            name.style.color = "#f59e0b";
+            rarity.innerText = "SPINNING...";
+            rarity.style.color = "#f59e0b";
+            icon.className = "fa-solid fa-spinner animate-spin text-5xl text-amber-500 mb-3";
+
+            setTimeout(() => {
+                // สุ่มของจากอาร์เรย์
+                const result = items[Math.floor(Math.random() * items.length)];
+                
+                // แสดงผลลัพธ์
+                display.classList.remove('spinning');
+                display.style.borderColor = result.color;
+                
+                icon.className = `fa-solid ${result.icon} text-5xl mb-3`;
+                icon.style.color = result.color;
+                
+                name.innerText = result.name;
+                name.style.color = "#ffffff";
+                
+                rarity.innerText = result.rarity;
+                rarity.style.color = result.color;
+                
+                btn.disabled = false;
+            }, 2000); // หมุน 2 วินาที
+        }
+    </script>
 </body>
 </html>
