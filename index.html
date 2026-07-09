@@ -1,65 +1,95 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SCUM ZONE PVE</title>
-
-<style>
-body{
-    margin:0;
-    background:#111;
-    color:white;
-    font-family:Arial;
-    text-align:center;
-}
-
-header{
-    background:#ff9900;
-    padding:20px;
-}
-
-h1{
-    margin:0;
-}
-
-.box{
-    width:80%;
-    margin:auto;
-    margin-top:30px;
-    background:#222;
-    padding:20px;
-    border-radius:10px;
-}
-
-button{
-    background:#ff9900;
-    color:white;
-    border:none;
-    padding:15px 30px;
-    font-size:18px;
-    border-radius:8px;
-    cursor:pointer;
-}
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCUM ZONE PVE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #1a1a1a;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://images.unsplash.com/photo-1579374020961-04a434070a31?q=80&w=1920'); /* รูปพื้นหลังบรรยากาศเกม */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        .scum-header {
+            background: linear-gradient(180deg, rgba(255,165,0,1) 0%, rgba(212,138,0,1) 100%);
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .scum-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .welcome-card {
+            background-color: rgba(30, 30, 30, 0.9);
+            border: 2px solid #D48A00;
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 600px;
+            margin: 100px auto;
+            text-align: center;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            position: relative;
+        }
+        .welcome-title {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #D48A00;
+            margin-bottom: 20px;
+        }
+        .welcome-text {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+        .scum-button {
+            background: linear-gradient(180deg, rgba(255,165,0,1) 0%, rgba(212,138,0,1) 100%);
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+        }
+        .scum-button:hover {
+            background: linear-gradient(180deg, rgba(212,138,0,1) 0%, rgba(180,117,0,1) 100%);
+            transform: translateY(-2px);
+        }
+        .scum-button:active {
+            transform: translateY(1px);
+        }
+    </style>
 </head>
 <body>
+    <header class="scum-header">
+        <div class="scum-title">
+            <span>🏕️</span>
+            <span>SCUM ZONE PVE</span>
+        </div>
+    </header>
 
-<header>
-<h1>🏕️ SCUM ZONE PVE</h1>
-</header>
-
-<div class="box">
-<h2>ยินดีต้อนรับ</h2>
-
-<p>เว็บไซต์เซิร์ฟเวอร์ SCUM ZONE PVE</p>
-
-<button onclick="alert('เร็ว ๆ นี้จะเปิดระบบร้านแลกของ')">
-ร้านแลกของ
-</button>
-
-</div>
-
+    <main>
+        <div class="welcome-card">
+            <h1 class="welcome-title">ยินดีต้อนรับ</h1>
+            <p class="welcome-text">เว็บไซต์เซิร์ฟเวอร์ SCUM ZONE PVE</p>
+            <button class="scum-button">ร้านแลกของ</button>
+        </div>
+    </main>
 </body>
 </html>
