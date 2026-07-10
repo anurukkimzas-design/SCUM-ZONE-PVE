@@ -134,37 +134,25 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            margin-top: 40px;
-        }
-        
-        /* ปรับดีไซน์กรอบโลโก้ให้กว้างขึ้นและคงความเหลี่ยมมนตามสไตล์เกม */
-        .server-logo {
-            width: 320px; 
-            height: 320px;
-            object-fit: cover;
-            border-radius: 24px; /* ปรับจากวงกลมเป๊ะ เป็นเหลี่ยมขอบมนเพื่อไม่ให้กินเนื้อหาโลโก้ */
-            margin-bottom: 25px;
-            box-shadow: 0 0 40px rgba(255, 0, 127, 0.5);
-            border: 2px solid rgba(255, 0, 127, 0.4);
         }
 
         .tags {
             font-family: 'Orbitron', sans-serif;
-            font-size: 10px;
+            font-size: 11px;
             font-weight: 700;
             color: #ff007f;
             letter-spacing: 3px;
             border: 1px solid rgba(255, 0, 127, 0.25);
             padding: 6px 18px;
             border-radius: 20px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             background: rgba(255, 0, 127, 0.03);
         }
         .title {
             font-family: 'Orbitron', sans-serif;
-            font-size: 54px; 
+            font-size: 68px; /* ปรับขนาดตัวอักษรให้เด่นขึ้นเมื่อไม่มีโลโก้ */
             font-weight: 900;
-            letter-spacing: 3px;
+            letter-spacing: 4px;
             color: #ffffff;
             line-height: 1.1;
         }
@@ -174,12 +162,12 @@
         }
         .subtitle {
             font-family: 'Orbitron', sans-serif;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 400;
             letter-spacing: 12px;
             color: #ffffff;
             margin-top: 5px;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             text-indent: 12px;
         }
 
@@ -196,7 +184,7 @@
             padding: 6px 18px;
             border-radius: 4px;
             background: rgba(0, 0, 0, 0.5);
-            margin-bottom: 35px;
+            margin-bottom: 40px;
         }
         .status-dot {
             width: 6px;
@@ -227,7 +215,7 @@
             text-decoration: none;
         }
         .btn-copy {
-            background: linear-gradient(135deg, #ff007f 0%, #9d00ff 100%); /* ไล่เฉดสีชมพูไปม่วงตามโลโก้ของคุณ */
+            background: linear-gradient(135deg, #ff007f 0%, #9d00ff 100%); /* ไล่เฉดสีชมพูไปม่วงตามโทนเซิร์ฟเวอร์ */
             color: #ffffff;
             box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
         }
@@ -286,9 +274,7 @@
 
         <!-- ส่วนเนื้อหาหลักและปุ่มกดกลางเว็บ -->
         <main class="hero">
-            <!-- ดึงลิงก์รูปภาพตรงจากโฮสต์สำรอง เพื่อความชัวร์และขึ้นแสดงผลทันทีโดยไม่ต้องอัปโหลดรูปแยก -->
-            <img src="https://r2.dev" alt="SCUM ZONE Logo" class="server-logo">
-
+            
             <div class="tags">PVE 100% • DROP RATE X3</div>
             
             <h1 class="title">[TH] SCUM ZONE <span>PVE</span></h1>
@@ -308,3 +294,17 @@
     </div>
 
     <!-- ดึงปลั๊กอินสำหรับรันละอองไฟสีชมพู -->
+    <script src="https://jsdelivr.net"></script>
+    <script>
+        /* ระบบควบคุมการลอยตัวของละอองไฟ */
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 90, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#ff007f" }, 
+                "shape": { "type": "circle" },
+                "opacity": {
+                    "value": 0.5, "random": true,
+                    "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
+                },
+                "size": {
+                    "value": 3, "random": true,
