@@ -3,63 +3,308 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[TH] SCUM ZONE PVE Drop Rate x3</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>[TH] SCUM ZONE PVE</title>
+    <!-- นำเข้าฟอนต์สไตล์เกมเมอร์/Sci-Fi -->
+    <link href="https://googleapis.com" rel="stylesheet">
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Noto+Sans+Thai:wght@300;400;500;700&display=swap');
-        body { background-color: #050505; color: #e2e8f0; font-family: 'Noto Sans Thai', sans-serif; }
-        .font-orbitron { font-family: 'Orbitron', sans-serif; }
-        .particles-bg { 
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background-image: radial-gradient(2px 2px at 20px 30px, #00ff66, rgba(0,0,0,0));
-            background-size: 200px 200px; opacity: 0.3; pointer-events: none;
+        /* --- ตั้งค่าพื้นฐานเบื้องต้น --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #050608;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* เอฟเฟกต์แสงฟุ้งสีแดง/เขียวจางๆ ด้านหลังตามรูปภาพต้นฉบับ */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 0, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 40%, rgba(0, 255, 136, 0.05) 0%, transparent 60%);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* ชั้นวางระบบเอฟเฟกต์ละอองไฟ (Particles) */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* เนื้อหาหลักทั้งหมดจะถูกจัดวางเหนือเอฟเฟกต์ */
+        .content-wrapper {
+            position: relative;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        /* --- แถบเมนูด้านบน (Navigation Bar) --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 60px;
+            background: rgba(5, 6, 8, 0.75);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            width: 100%;
+        }
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: 22px;
+            color: #ffffff;
+            letter-spacing: 1px;
+        }
+        .logo span {
+            color: #00ff88;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.6);
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 24px;
+        }
+        nav ul li a {
+            color: #b3b3b3;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: color 0.3s;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            color: #00ff88;
+            border-bottom: 2px solid #00ff88;
+            padding-bottom: 4px;
+        }
+        .right-menu {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .lang {
+            font-size: 12px;
+            font-weight: bold;
+            color: #b3b3b3;
+        }
+        .login-btn {
+            background: #00ff88;
+            color: #050608;
+            padding: 8px 24px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 800;
+            font-size: 13px;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+            transition: all 0.2s;
+        }
+        .login-btn:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.6);
+        }
+
+        /* --- ส่วนเนื้อหาหลักกลางหน้าจอ (Hero Section) --- */
+        .hero {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .tags {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            color: #00ff88;
+            letter-spacing: 3px;
+            border: 1px solid rgba(0, 255, 136, 0.25);
+            padding: 6px 18px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            background: rgba(0, 255, 136, 0.03);
+        }
+        .title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 76px;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #ffffff;
+            line-height: 1;
+        }
+        .title span {
+            color: #00ff88;
+            text-shadow: 0 0 35px rgba(0, 255, 136, 0.65);
+        }
+        .subtitle {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 32px;
+            font-weight: 400;
+            letter-spacing: 12px;
+            color: #ffffff;
+            margin-top: 10px;
+            margin-bottom: 35px;
+            text-indent: 12px; /* ให้ตัวอักษรอยู่ตรงกลางเป๊ะแม้เคาะเว้นวรรคกว้าง */
+        }
+
+        /* --- กล่องสถานะออนไลน์ --- */
+        .status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.2);
+            padding: 6px 18px;
+            border-radius: 4px;
+            background: rgba(0, 0, 0, 0.5);
+            margin-bottom: 45px;
+        }
+        .status-dot {
+            width: 6px;
+            height: 6px;
+            background-color: #00ff88;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00ff88;
+            animation: blink 1.5s infinite;
+        }
+
+        /* --- ส่วนของปุ่มกดหลักคู่กัน 2 ปุ่ม --- */
+        .cta-container {
+            display: flex;
+            gap: 20px;
+        }
+        .btn {
+            padding: 15px 32px;
+            font-family: 'Inter', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+        .btn-copy {
+            background: #00ff88;
+            color: #050608;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.25);
+        }
+        .btn-copy:hover {
+            box-shadow: 0 0 35px rgba(0, 255, 136, 0.55);
+            transform: translateY(-2px);
+        }
+        .btn-discord {
+            background: rgba(35, 39, 42, 0.6);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        .btn-discord:hover {
+            background: #5865F2; /* เปลี่ยนเป็นสีน้ำเงินเอกลักษณ์ดิสคอร์ดเวลาชี้ */
+            border-color: #5865F2;
+            transform: translateY(-2px);
+            box-shadow: 0 0 25px rgba(88, 101, 242, 0.4);
+        }
+
+        /* --- Animation ไฟกะพริบ --- */
+        @keyframes blink {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <!-- NAVIGATION -->
-    <nav class="border-b border-zinc-800 px-6 py-4 sticky top-0 z-50 bg-black/80 backdrop-blur">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-xl font-black text-white font-orbitron">SCUM <span class="text-[#00ff66]">ZONE</span></div>
-            <button class="bg-[#00ff66] text-black font-black px-6 py-1.5 rounded-full text-xs uppercase hover:bg-green-500 transition">Login</button>
-        </div>
-    </nav>
+    <!-- พื้นหลังละอองไฟสีเขียววิ่งๆขยับได้ -->
+    <div id="particles-js"></div>
 
-    <!-- HERO SECTION -->
-    <section class="relative w-full h-[70vh] flex flex-col justify-center items-center text-center">
-        <div class="particles-bg"></div>
-        <h1 class="text-5xl font-black text-white mb-4 font-orbitron">[TH] SCUM ZONE <span class="text-[#00ff66]">PVE</span></h1>
-        <p class="text-gray-400 mb-8 uppercase tracking-widest">Drop Rate x3 | PvE Experience</p>
+    <!-- ครอบเนื้อหาเว็บทั้งหมด -->
+    <div class="content-wrapper">
         
-        <div class="mb-8 border border-zinc-700 bg-black px-6 py-2 rounded text-sm flex items-center gap-2">
-            <span class="h-2 w-2 rounded-full bg-[#00ff66] animate-pulse"></span>
-            ONLINE: <span id="online-count" class="text-[#00ff66]">กำลังโหลด...</span>
-        </div>
+        <!-- แถบเมนูด้านบนแบบเต็มชุด -->
+        <header>
+            <div class="logo">SCUM <span>ZONE</span></div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">Home</a></li>
+                    <li><a href="#">Server Info</a></li>
+                    <li><a href="#">Starter Pack</a></li>
+                    <li><a href="#">Loot Guide</a></li>
+                    <li><a href="#">Rules</a></li>
+                    <li><a href="#">Bot Shop</a></li>
+                    <li><a href="#">Donate</a></li>
+                </ul>
+            </nav>
+            <div class="right-menu">
+                <span class="lang">EN</span>
+                <a href="#" class="login-btn">LOGIN</a>
+            </div>
+        </header>
 
-        <a href="steam://connect/45.124.213.26:7000" class="bg-[#00ff66]/10 border border-[#00ff66] text-[#00ff66] hover:bg-[#00ff66] hover:text-black font-bold px-8 py-3 rounded-lg transition flex items-center gap-2">
-            <i class="fa-solid fa-gamepad"></i> CONNECT TO SERVER
-        </a>
-    </section>
+        <!-- ส่วนข้อความและปุ่มหลักกลางเว็บ -->
+        <main class="hero">
+            <div class="tags">DROP RATE X3 • PVE EXPERIENCE</div>
+            
+            <h1 class="title">[TH] SCUM ZONE <span>PVE</span></h1>
+            <div class="subtitle">SERVER</div>
+            
+            <div class="status">
+                <span class="status-dot"></span>
+                ONLINE: 15/100
+            </div>
+            
+            <div class="cta-container">
+                <!-- ใส่ลิงก์ไอพีเซิร์ฟเวอร์ของคุณตรงฟังก์ชัน copyIP ในส่วนล่างสุดได้ครับ -->
+                <button class="btn btn-copy" onclick="copyIP()">📋 Copy Server IP</button>
+                <!-- ใส่ลิงก์เชิญเข้าดิสคอร์ดของคุณตรงปุ่มนี้แทนลิงก์เดิมได้เลย -->
+                <a href="https://discord.gg" target="_blank" class="btn btn-discord">💬 Join Discord</a>
+            </div>
+        </main>
+        
+    </div>
 
-    <!-- SCRIPT ดึงคนออนไลน์ -->
+    <!-- ดึงปลั๊กอิน Particles.js สำหรับทำละอองไฟวิ่งอัตโนมัติ -->
+    <script src="https://jsdelivr.net"></script>
     <script>
-        // 🔴 สำคัญ: นำตัวเลข ID จากท้ายลิงก์ BattleMetrics ของคุณมาใส่ตรงนี้ 🔴
-        const SERVER_ID = '0000000'; 
-
-        async function fetchServerData() {
-            try {
-                const response = await fetch(`https://api.battlemetrics.com/servers/${SERVER_ID}`);
-                const data = await response.json();
-                const players = data.data.attributes.players;
-                const max = data.data.attributes.maxPlayers;
-                document.getElementById('online-count').innerText = `${players}/${max}`;
-            } catch (e) {
-                document.getElementById('online-count').innerText = "ONLINE";
-            }
-        }
-        if(SERVER_ID !== '0000000') fetchServerData();
-    </script>
-</body>
-</html>
+        /* ตั้งค่าระบบละอองไฟสีเขียวนีออนฟุ้งๆ ให้เหมือนต้นฉบับ */
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 110, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#00ff88" },
+                "shape": { "type": "circle" },
+                "opacity": {
+                    "value": 0.5, "random": true,
+                    "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
+                },
+                "size": {
+                    "value": 3, "random": true,
