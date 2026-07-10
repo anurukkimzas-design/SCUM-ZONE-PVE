@@ -18,14 +18,14 @@
             scroll-behavior: smooth;
         }
         body {
-            background-color: #050206; /* ปรับพื้นหลังให้ติดโทนม่วงมืด */
+            background-color: #050206; /* พื้นหลังโทนม่วงมืด */
             color: #ffffff;
             font-family: 'Inter', sans-serif;
             overflow-x: hidden;
             position: relative;
         }
 
-        /* เอฟเฟกต์แสงฟุ้งสีชมพู/ม่วงจางๆ ด้านหลังตามโทนเซิร์ฟเวอร์ */
+        /* เอฟเฟกต์แสงฟุ้งสีชมพู/ม่วงจางๆ ด้านหลัง */
         body::before {
             content: '';
             position: absolute;
@@ -34,25 +34,25 @@
                 radial-gradient(circle at 30% 20%, rgba(255, 0, 128, 0.08) 0%, transparent 40%),
                 radial-gradient(circle at 70% 50%, rgba(157, 0, 255, 0.06) 0%, transparent 50%),
                 radial-gradient(circle at 50% 80%, rgba(255, 0, 128, 0.05) 0%, transparent 40%);
-            z-index: 1;
+            z-index: -2; /* ดันแสงฟุ้งไปหลังสุด */
             pointer-events: none;
         }
 
-        /* ชั้นวางระบบเอฟเฟกต์ละอองไฟ (Particles) */
+        /* แก้ไขจุดนี้: ตั้งค่าระบบเอฟเฟกต์ละอองไฟให้อยู่ฉากหลัง ไม่บังตัวอักษร */
         #particles-js {
-            position: absolute;
+            position: fixed; /* ใช้ fixed เพื่อให้ละอองลอยตามตอนเลื่อนหน้าจอ */
             width: 100%;
             height: 100%;
             top: 0;
             left: 0;
-            z-index: 2;
+            z-index: -1; /* ดันละอองไฟลงไปอยู่ใต้ข้อความ */
             pointer-events: none;
         }
 
         /* เนื้อหาหลักทั้งหมดจะถูกจัดวางเหนือเอฟเฟกต์ */
         .content-wrapper {
             position: relative;
-            z-index: 3;
+            z-index: 1; /* ดันข้อความทั้งหมดลอยขึ้นมาด้านบน */
             display: flex;
             flex-direction: column;
             width: 100%;
@@ -64,7 +64,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 60px;
-            background: rgba(5, 2, 6, 0.75);
+            background: rgba(5, 2, 6, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 0, 128, 0.05);
             width: 100%;
@@ -81,7 +81,7 @@
             letter-spacing: 1px;
         }
         .logo span {
-            color: #ff007f; /* เปลี่ยนเป็นสีชมพูนีออน */
+            color: #ff007f;
             text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
         }
         nav ul {
@@ -114,7 +114,7 @@
             color: #b3b3b3;
         }
         .login-btn {
-            background: #ff007f; /* ปุ่มล็อกอินสีชมพูนีออน */
+            background: #ff007f;
             color: #ffffff;
             padding: 8px 24px;
             border-radius: 20px;
@@ -273,7 +273,7 @@
             margin-bottom: 50px;
         }
 
-        /* การจัดวางกลุ่มกล่องสถิติเล็ก 4 กล่องด้านบน */
+        /* กล่องสถิติเล็ก 4 กล่องด้านบน */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -312,7 +312,7 @@
             text-transform: uppercase;
         }
 
-        /* การจัดวางกลุ่มกล่องรายละเอียดยาว 4 กล่องด้านล่าง */
+        /* กล่องรายละเอียดยาว 4 กล่องด้านล่าง */
         .details-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -321,5 +321,3 @@
         .detail-card {
             background: rgba(18, 10, 22, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 12px;
-            padding: 25px;
