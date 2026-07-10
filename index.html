@@ -3,308 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[TH] SCUM ZONE PVE</title>
-    <!-- นำเข้าฟอนต์สไตล์เกมเมอร์/Sci-Fi -->
-    <link href="https://googleapis.com" rel="stylesheet">
-    
-    <style>
-        /* --- ตั้งค่าพื้นฐานเบื้องต้น --- */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background-color: #050206; /* ปรับพื้นหลังให้ติดโทนม่วงมืด */
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            overflow-x: hidden;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-        }
+    <title>SCUM ZONE PVE</title>
 
-        /* เอฟเฟกต์แสงฟุ้งสีชมพู/ม่วงจางๆ ด้านหลังตามโทนโลโก้ใหม่ */
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
-                radial-gradient(circle at 30% 30%, rgba(255, 0, 128, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(157, 0, 255, 0.06) 0%, transparent 60%);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        /* ชั้นวางระบบเอฟเฟกต์ละอองไฟ (Particles) */
-        #particles-js {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        /* เนื้อหาหลักทั้งหมดจะถูกจัดวางเหนือเอฟเฟกต์ */
-        .content-wrapper {
-            position: relative;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        /* --- แถบเมนูด้านบน (Navigation Bar) --- */
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 60px;
-            background: rgba(5, 2, 6, 0.75);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255, 0, 128, 0.05);
-            width: 100%;
-        }
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: 22px;
-            color: #ffffff;
-            letter-spacing: 1px;
-        }
-        .logo span {
-            color: #ff007f; /* เปลี่ยนเป็นสีชมพูนีออน */
-            text-shadow: 0 0 10px rgba(255, 0, 127, 0.6);
-        }
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 24px;
-        }
-        nav ul li a {
-            color: #b3b3b3;
-            text-decoration: none;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            transition: color 0.3s;
-        }
-        nav ul li a:hover, nav ul li a.active {
-            color: #ff007f;
-            border-bottom: 2px solid #ff007f;
-            padding-bottom: 4px;
-        }
-        .right-menu {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-        .lang {
-            font-size: 12px;
-            font-weight: bold;
-            color: #b3b3b3;
-        }
-        .login-btn {
-            background: #ff007f; /* ปุ่มล็อกอินสีชมพูนีออน */
-            color: #ffffff;
-            padding: 8px 24px;
-            border-radius: 20px;
-            text-decoration: none;
-            font-weight: 800;
-            font-size: 13px;
-            letter-spacing: 0.5px;
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.3);
-            transition: all 0.2s;
-        }
-        .login-btn:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 25px rgba(255, 0, 127, 0.6);
-        }
-
-        /* --- ส่วนเนื้อหาหลักกลางหน้าจอ (Hero Section) --- */
-        .hero {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-        }
-
-        .tags {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            color: #ff007f;
-            letter-spacing: 3px;
-            border: 1px solid rgba(255, 0, 127, 0.25);
-            padding: 6px 18px;
-            border-radius: 20px;
-            margin-bottom: 25px;
-            background: rgba(255, 0, 127, 0.03);
-        }
-        .title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 68px; /* ปรับขนาดตัวอักษรให้เด่นขึ้นเมื่อไม่มีโลโก้ */
-            font-weight: 900;
-            letter-spacing: 4px;
-            color: #ffffff;
-            line-height: 1.1;
-        }
-        .title span {
-            color: #ff007f;
-            text-shadow: 0 0 35px rgba(255, 0, 127, 0.65);
-        }
-        .subtitle {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 28px;
-            font-weight: 400;
-            letter-spacing: 12px;
-            color: #ffffff;
-            margin-top: 5px;
-            margin-bottom: 35px;
-            text-indent: 12px;
-        }
-
-        /* --- กล่องสถานะออนไลน์ --- */
-        .status {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            color: #ff007f;
-            border: 1px solid rgba(255, 0, 127, 0.2);
-            padding: 6px 18px;
-            border-radius: 4px;
-            background: rgba(0, 0, 0, 0.5);
-            margin-bottom: 40px;
-        }
-        .status-dot {
-            width: 6px;
-            height: 6px;
-            background-color: #ff007f;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ff007f;
-            animation: blink 1.5s infinite;
-        }
-
-        /* --- ส่วนของปุ่มกดหลักคู่กัน 2 ปุ่ม --- */
-        .cta-container {
-            display: flex;
-            gap: 20px;
-        }
-        .btn {
-            padding: 15px 32px;
-            font-family: 'Inter', sans-serif;
-            font-size: 15px;
-            font-weight: 700;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.2s ease;
-            text-decoration: none;
-        }
-        .btn-copy {
-            background: linear-gradient(135deg, #ff007f 0%, #9d00ff 100%); /* ไล่เฉดสีชมพูไปม่วงตามโทนเซิร์ฟเวอร์ */
-            color: #ffffff;
-            box-shadow: 0 0 20px rgba(255, 0, 127, 0.3);
-        }
-        .btn-copy:hover {
-            box-shadow: 0 0 35px rgba(255, 0, 127, 0.6);
-            transform: translateY(-2px);
-        }
-        .btn-discord {
-            background: rgba(35, 39, 42, 0.6);
-            color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-        }
-        .btn-discord:hover {
-            background: #5865F2; /* สีน้ำเงินสัญลักษณ์ Discord */
-            border-color: #5865F2;
-            transform: translateY(-2px);
-            box-shadow: 0 0 25px rgba(88, 101, 242, 0.4);
-        }
-
-        /* --- Animation ไฟกะพริบ --- */
-        @keyframes blink {
-            0% { opacity: 0.3; }
-            50% { opacity: 1; }
-            100% { opacity: 0.3; }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <!-- พื้นหลังละอองไฟสีชมพู/ม่วง วิ่งๆขยับได้อัตโนมัติ -->
-    <div id="particles-js"></div>
+<nav>
 
-    <!-- ครอบเนื้อหาเว็บทั้งหมดเพื่อจัดวางเหนือบอร์ดพาร์ทิเคิล -->
-    <div class="content-wrapper">
-        
-        <!-- แถบเมนูด้านบน -->
-        <header>
-            <div class="logo">SCUM <span>ZONE</span></div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="active">Home</a></li>
-                    <li><a href="#">Server Info</a></li>
-                    <li><a href="#">Starter Pack</a></li>
-                    <li><a href="#">Loot Guide</a></li>
-                    <li><a href="#">Rules</a></li>
-                    <li><a href="#">Bot Shop</a></li>
-                    <li><a href="#">Donate</a></li>
-                </ul>
-            </nav>
-            <div class="right-menu">
-                <span class="lang">EN</span>
-                <a href="#" class="login-btn">LOGIN</a>
-            </div>
-        </header>
+<div class="logo">
+SCUM <span>ZONE</span>
+</div>
 
-        <!-- ส่วนเนื้อหาหลักและปุ่มกดกลางเว็บ -->
-        <main class="hero">
-            
-            <div class="tags">PVE 100% • DROP RATE X3</div>
-            
-            <h1 class="title">[TH] SCUM ZONE <span>PVE</span></h1>
-            <div class="subtitle">SERVER</div>
-            
-            <div class="status">
-                <span class="status-dot"></span>
-                ONLINE: 15/100
-            </div>
-            
-            <div class="cta-container">
-                <button class="btn btn-copy" onclick="copyIP()">📋 Copy Server IP</button>
-                <a href="https://discord.gg" target="_blank" class="btn btn-discord">💬 Join Discord</a>
-            </div>
-        </main>
-        
-    </div>
+<ul>
+<li><a href="#">HOME</a></li>
+<li><a href="#">SERVER</a></li>
+<li><a href="#">SHOP</a></li>
+<li><a href="#">RULES</a></li>
+<li><a href="#">DISCORD</a></li>
+</ul>
 
-    <!-- ดึงปลั๊กอินสำหรับรันละอองไฟสีชมพู -->
-    <script src="https://jsdelivr.net"></script>
-    <script>
-        /* ระบบควบคุมการลอยตัวของละอองไฟ */
-        particlesJS("particles-js", {
-            "particles": {
-                "number": { "value": 90, "density": { "enable": true, "value_area": 800 } },
-                "color": { "value": "#ff007f" }, 
-                "shape": { "type": "circle" },
-                "opacity": {
-                    "value": 0.5, "random": true,
-                    "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false }
-                },
-                "size": {
-                    "value": 3, "random": true,
+</nav>
+
+<header>
+
+<h1>SCUM ZONE PVE</h1>
+
+<p>PVE 100% • DROP RATE X3</p>
+
+<a class="button" href="#">
+PLAY NOW
+</a>
+
+</header>
+
+<section class="cards">
+
+<div class="card">
+<h2>ข่าวล่าสุด</h2>
+<p>Season 2 เปิดแล้ว</p>
+</div>
+
+<div class="card">
+<h2>Starter Pack</h2>
+<p>รับของฟรี</p>
+</div>
+
+<div class="card">
+<h2>Point Shop</h2>
+<p>แลกไอเทม</p>
+</div>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
