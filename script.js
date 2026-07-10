@@ -1,9 +1,9 @@
 function copyIP(){
 
-const ip="YOUR SERVER IP";
+const ip="ใส่ IP เซิร์ฟเวอร์";
 
 navigator.clipboard.writeText(ip);
 
-alert("Copy แล้ว");
+alert("คัดลอก IP แล้ว");
 
 }
